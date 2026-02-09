@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffeef2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #container {
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            width: 300px;
+        }
+
+        h1 { color: #d63384; margin-bottom: 20px; }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #adb5bd; color: white; position: absolute; }
+
+        .hidden { display: none; }
+        #message { color: #590d22; font-size: 1.2rem; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="quiz">
+            <h1 id="question">Will you be my Valentine? ❤️</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="result" class="hidden">
+            <h1>Yay! 🥰</h1>
+            <p id="message">
+                [INSERT YOUR HEARTFELT MESSAGE HERE]<br><br>
+                I'm the luckiest person to have you. I can't wait to spend the day with you!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const quiz = document.getElementById('quiz');
+        const result = document.getElementById('result');
+
+        // The "No" button dodge logic
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // The "Yes" button logic
+        yesBtn.addEventListener('click', () => {
+            quiz.classList.add('hidden');
+            result.classList.remove('hidden');
+            
+            // Confetti effect
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ff758f', '#ffb3c1']
+            });
+        });
+    </script>
+</body>
+</html>
